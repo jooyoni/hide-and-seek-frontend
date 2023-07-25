@@ -1,3 +1,6 @@
 .chat {
-    color: red;
+  color: red;
+  &.myChat {
+    color: blue;
+  }
 }
