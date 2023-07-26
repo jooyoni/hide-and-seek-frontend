@@ -10,6 +10,7 @@ interface IUserType {
 }
 function Me() {
   const myData = useAppSelector((state) => state.me);
+
   const dispatch = useAppDispatch();
   const location = useLocation();
   const [nicknameInput, setNicknameInput] = useState('');
@@ -25,6 +26,7 @@ function Me() {
     dispatch(meActions.update({ id: myData.id, nickname: nicknameInput }));
     setNickname(myData.id, nicknameInput);
   }
+
   return (
     <>
       <div>me</div>
@@ -33,7 +35,7 @@ function Me() {
           onSubmit={(e) => nicknameSubmit(e)}
           className={styles.nicknameForm}
         >
-          <h3>닉네임을 입력해주세요.</h3>
+          <h3>닉.</h3>
           <input
             type="text"
             value={nicknameInput}

@@ -13,14 +13,25 @@ function Chat() {
   useEffect(() => {
     getChat(setChatList);
   }, []);
+  function chatSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!myData.id) return;
+    if (!chat) {
+      alert('메세지를 입력해주세요.');
+      return;
+    }
+    sendChat(myData.id, chat);
+  }
   return (
     <article>
-      <input
-        type="text"
-        value={chat}
-        onChange={(e) => setChat(e.currentTarget.value)}
-      />
-      <button onClick={() => sendChat(myData.id, chat)}>전송</button>
+      <form onSubmit={(e) => chatSubmit(e)}>
+        <input
+          type="text"
+          value={chat}
+          onChange={(e) => setChat(e.currentTarget.value)}
+        />
+        <button>전송</button>
+      </form>
       <ul>
         {chatList.map((chat, idx) => (
           <li
