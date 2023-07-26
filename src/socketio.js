@@ -7,7 +7,7 @@ export let socket;
 //소켓 연결
 export const initSocketConnection = () => {
   if (socket) return;
-  socket = io('http://172.30.1.71:5000/', {
+  socket = io(`${process.env.REACT_APP_API_URL}:5000/`, {
     transports: ['websocket'],
   });
   socket.connect();
