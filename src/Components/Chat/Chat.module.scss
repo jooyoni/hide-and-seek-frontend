@@ -1,6 +1,10 @@
 .chat {
-  color: red;
+  display: flex;
+  flex-direction: column;
   &.myChat {
-    color: blue;
+    text-align: right;
+  }
+  & > span:last-child {
+    font-size: 24px;
   }
 }

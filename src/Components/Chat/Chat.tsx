@@ -10,6 +10,8 @@ function Chat() {
   const myData = useAppSelector((state) => state.me);
   const [chat, setChat] = useState('');
   const [chatList, setChatList] = useState<IChatType[]>([]);
+  const users = useAppSelector((state) => state.users);
+
   useEffect(() => {
     getChat(setChatList);
   }, []);
@@ -22,6 +24,22 @@ function Chat() {
     }
     sendChat(myData.id, chat);
   }
+
+  function getNickname(chat: IChatType) {
+    if (chat.id == myData.id) return myData.nickname;
+    else {
+      return users.val[chat.id].nickname;
+      // let nickname = '';
+      // for (let i = 0; i < users.val.length; i++) {
+      //   if (users.val[i].id == chat.id) {
+      //     nickname = users.val[i].nickname;
+      //     break;
+      //   }
+      // }
+      // return nickname;
+    }
+  }
+  console.log(chatList);
   return (
     <article>
       <form onSubmit={(e) => chatSubmit(e)}>
@@ -40,7 +58,8 @@ function Chat() {
             }`}
             key={idx}
           >
-            {chat.chat}
+            <span>{getNickname(chat)}</span>
+            <span>{chat.chat}</span>
           </li>
         ))}
       </ul>

@@ -18,7 +18,7 @@ function Me() {
   const { roomNumber } = useParams();
   useEffect(() => {
     initSocketConnection();
-    joinRoom(roomNumber, myData, dispatch);
+    joinRoom(roomNumber, dispatch);
   }, []);
 
   function nicknameSubmit(e: React.FormEvent<HTMLFormElement>) {

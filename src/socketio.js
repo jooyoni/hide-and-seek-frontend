@@ -3,6 +3,7 @@ import axiosClient from './utils/axiosClient';
 import { meActions } from './store/modules/me';
 import GetMyData from './hoc/GetMyData';
 import { usersActions } from './store/modules/users';
+import { store } from './store/store';
 
 export let socket;
 //소켓 연결
@@ -16,15 +17,21 @@ export const initSocketConnection = () => {
     alert('연결이 종료되었습니다.');
     window.location.href = '/';
   });
+  socket.on('updateNickname', (id, nickname) => {
+    alert(nickname);
+    if (id == store.getState().me.id) return;
+    store.dispatch(usersActions.updateNickname({ id, nickname }));
+  });
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
-export const joinRoom = (roomNumber, userData, dispatch) => {
+export const joinRoom = (roomNumber, dispatch) => {
   socket.emit('joinRoom', roomNumber);
   socket.on('joinSuccess', (id, data) => {
+    const myData = store.getState().me;
+
     //id는 joinSuccess를 발생시킨 유저의 id, data는 전체 유저의 데이터
-    console.log(id, data);
-    if (!userData.id) dispatch(meActions.update({ id, nickname: '' }));
+    if (!myData.id) dispatch(meActions.update({ id, nickname: '' }));
     dispatch(usersActions.join(data.filter((user) => user[0] !== id)));
     alert('입장');
   });
