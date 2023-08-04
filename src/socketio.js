@@ -22,17 +22,26 @@ export const initSocketConnection = () => {
     if (id == store.getState().me.id) return;
     store.dispatch(usersActions.updateNickname({ id, nickname }));
   });
+  socket.on('updateNickname', (id, top, left) => {});
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
 export const joinRoom = (roomNumber, dispatch) => {
   socket.emit('joinRoom', roomNumber);
   socket.on('joinSuccess', (id, data) => {
-    const myData = store.getState().me;
-
     //id는 joinSuccess를 발생시킨 유저의 id, data는 전체 유저의 데이터
-    if (!myData.id) dispatch(meActions.update({ id, nickname: '' }));
-    dispatch(usersActions.join(data.filter((user) => user[0] !== id)));
+    const myData = store.getState().me;
+    let myId = '';
+
+    if (!myData.id) {
+      dispatch(meActions.update({ id, nickname: '' }));
+      myId = id;
+    }
+    dispatch(
+      usersActions.join(
+        data.filter((user) => user[0] !== myId && user[0] !== myData.id),
+      ),
+    );
     alert('입장');
   });
 };

@@ -39,7 +39,6 @@ function Chat() {
       // return nickname;
     }
   }
-  console.log(chatList);
   return (
     <article>
       <form onSubmit={(e) => chatSubmit(e)}>

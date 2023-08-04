@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialState: { val: any } = {
+interface IUserType {
+  [key: string]: {
+    nickname: string;
+    top: number;
+    left: number;
+  };
+}
+const initialState: { val: IUserType } = {
   val: {},
 };
 const users = createSlice({
@@ -9,14 +15,16 @@ const users = createSlice({
   reducers: {
     join: (state, action) => {
       let newState: any = {};
-      state.val = action.payload.map((user: any) => {
+      action.payload.map((user: any) => {
         newState[user[0]] = {
           nickname: user[1].nickname,
+          top: 0,
+          left: 0,
         };
       });
+      state.val = { ...newState };
     },
     updateNickname: (state, action) => {
-      console.log(state.val, action.payload);
       let updateValue = {
         [action.payload.id]: {
           nickname: action.payload.nickname,
