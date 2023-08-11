@@ -22,7 +22,9 @@ export const initSocketConnection = () => {
     if (id == store.getState().me.id) return;
     store.dispatch(usersActions.updateNickname({ id, nickname }));
   });
-  socket.on('updateNickname', (id, top, left) => {});
+  socket.on('updateLocation', (id, top, left) => {
+    store.dispatch(usersActions.updateLocation({ id, top, left }));
+  });
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
@@ -57,6 +59,11 @@ export const getChat = (setChat) => {
 };
 export const setNickname = (id, nickname) => {
   socket.emit('setNickname', id, nickname);
+};
+
+export const setLocation = () => {
+  const myData = store.getState().me;
+  socket.emit('setLocation', myData.id, { top: myData.top, left: myData.left });
 };
 
 // 소켓 연결을 끊음

@@ -33,6 +33,10 @@ const users = createSlice({
       state.val = { ...state.val, ...updateValue };
       // state.val[action.payload.id].nickname = action.payload.nickname;
     },
+    updateLocation: (state, action) => {
+      state.val[action.payload.id].top = action.payload.top;
+      state.val[action.payload.id].left = action.payload.left;
+    },
   },
 });
 

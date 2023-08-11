@@ -1,4 +1,9 @@
-import { initSocketConnection, joinRoom, setNickname } from '../../socketio';
+import {
+  initSocketConnection,
+  joinRoom,
+  setLocation,
+  setNickname,
+} from '../../socketio';
 import { useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import styles from './Me.module.scss';
@@ -67,6 +72,8 @@ function Me() {
         left: myDataRef.current.left,
       }),
     );
+    setLocation();
+
     setTimeout(() => {
       setIntervalHelper((prev) => prev + 1);
     }, 10);
