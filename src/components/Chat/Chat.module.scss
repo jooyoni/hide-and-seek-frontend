@@ -1,10 +1,36 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: scroll;
+    z-index: 1;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
 .chat {
-  display: flex;
-  flex-direction: column;
-  &.myChat {
-    text-align: right;
-  }
-  & > span:last-child {
-    font-size: 24px;
-  }
+    display: flex;
+    flex-direction: column;
+    color: white;
+    &.myChat {
+        text-align: right;
+    }
+    & > span:last-child {
+        font-size: 24px;
+    }
+}
+.closeBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
