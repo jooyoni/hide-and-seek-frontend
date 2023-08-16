@@ -4,6 +4,9 @@ interface IUserType {
         nickname: string;
         top: number;
         left: number;
+        team: string;
+        isAdmin: boolean;
+        isReady: boolean;
     };
 }
 const initialState: { val: IUserType } = {
@@ -20,18 +23,17 @@ const users = createSlice({
                     nickname: user[1].nickname,
                     top: user[1].top,
                     left: user[1].left,
+                    team: user[1].team,
+                    isAdmin: user[1].isAdmin,
+                    isReady: user[1].isReady,
                 };
             });
             state.val = { ...newState };
         },
         updateNickname: (state, action) => {
-            let updateValue = {
-                [action.payload.id]: {
-                    nickname: action.payload.nickname,
-                },
-            };
-            state.val = { ...state.val, ...updateValue };
-            // state.val[action.payload.id].nickname = action.payload.nickname;
+            let user = { ...current(state).val[action.payload.id] };
+            user.nickname = action.payload.nickname;
+            state.val[action.payload.id] = user;
         },
         updateLocation: (state, action) => {
             let user = { ...current(state).val[action.payload.id] };
@@ -40,13 +42,11 @@ const users = createSlice({
                 user.left = action.payload.left;
                 state.val[action.payload.id] = user;
             }
-            //   let updateValue = {
-            //     [action.payload.id]: {
-            //         nickname: action.payload.nickname,
-            //     },
-            // };
-            // state.val[action.payload.id].top = action.payload.top;
-            // state.val[action.payload.id].left = action.payload.left;
+        },
+        ready: (state, action) => {
+            let user = { ...current(state).val[action.payload.id] };
+            user.isReady = action.payload.isReady;
+            state.val[action.payload.id] = user;
         },
     },
 });

@@ -32,10 +32,9 @@ function Me() {
         initSocketConnection();
         joinRoom(roomNumber, dispatch);
     }, []);
-
     function nicknameSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        dispatch(meActions.update({ id: myData.id, nickname: nicknameInput }));
+        dispatch(meActions.update({ ...myData, nickname: nicknameInput }));
         setNickname(myData.id, nicknameInput);
     }
 
@@ -57,16 +56,31 @@ function Me() {
         } else if (e.keyCode == 40) setBottom(false);
     }
     useEffect(() => {
-        console.log(top, left, bottom, right);
         if (!top && !left && !bottom && !right) {
             setIsMoving(false);
             return;
         }
         let move = 5;
-        if (top) myDataRef.current.top = myDataRef.current.top - move;
-        if (left) myDataRef.current.left = myDataRef.current.left - move;
-        if (bottom) myDataRef.current.top = myDataRef.current.top + move;
-        if (right) myDataRef.current.left = myDataRef.current.left + move;
+        if (top)
+            myDataRef.current.top = Math.max(
+                myDataRef.current.top - move,
+                -225
+            );
+        if (left)
+            myDataRef.current.left = Math.max(
+                myDataRef.current.left - move,
+                -425
+            );
+        if (bottom)
+            myDataRef.current.top = Math.min(
+                myDataRef.current.top + move,
+                1225
+            );
+        if (right)
+            myDataRef.current.left = Math.min(
+                myDataRef.current.left + move,
+                1525
+            );
         dispatch(
             meActions.location({
                 top: myDataRef.current.top,
@@ -94,9 +108,17 @@ function Me() {
         <>
             <article
                 className={styles.character}
-                // style={{ top: myData.top, left: myData.left }}
+                style={{ backgroundColor: myData.team }}
             >
-                {myData.nickname}
+                <span className={styles.nickname}>
+                    (
+                    {myData.isAdmin
+                        ? "방장"
+                        : myData.isReady
+                        ? "준비완료"
+                        : "준비안함"}
+                    ){myData.nickname}
+                </span>
             </article>
             {!myData.nickname && (
                 <form

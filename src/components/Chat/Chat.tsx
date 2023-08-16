@@ -7,9 +7,10 @@ interface IChatType {
     chat: string;
 }
 interface IPropsType {
+    chatOpen: boolean;
     setChatOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function Chat({ setChatOpen }: IPropsType) {
+function Chat({ chatOpen, setChatOpen }: IPropsType) {
     const myData = useAppSelector((state) => state.me);
     const [chat, setChat] = useState("");
     const [chatList, setChatList] = useState<IChatType[]>([]);
@@ -44,7 +45,10 @@ function Chat({ setChatOpen }: IPropsType) {
         }
     }
     return (
-        <article className={styles.container}>
+        <article
+            className={styles.container}
+            style={{ display: chatOpen ? "block" : "none" }}
+        >
             <form onSubmit={(e) => chatSubmit(e)}>
                 <input
                     type="text"

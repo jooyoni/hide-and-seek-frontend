@@ -26,6 +26,10 @@ export const initSocketConnection = () => {
         if (id == store.getState().me.id) return;
         store.dispatch(usersActions.updateLocation({ id, top, left }));
     });
+    socket.on("ready", (id, isReady) => {
+        if (id == store.getState().me.id) return;
+        store.dispatch(usersActions.ready({ id, isReady }));
+    });
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
@@ -35,14 +39,20 @@ export const joinRoom = (roomNumber, dispatch) => {
         //id는 joinSuccess를 발생시킨 유저의 id, data는 전체 유저의 데이터
         const myData = store.getState().me;
         let myId = "";
-
         if (!myData.id) {
-            dispatch(meActions.update({ id, nickname: "" }));
+            //사용자 첫 입장시
+            dispatch(
+                meActions.update({
+                    id,
+                    nickname: "",
+                    data: data.filter((user) => user[0] == id)[0][1],
+                })
+            );
             myId = id;
         }
         dispatch(
             usersActions.join(
-                data.filter((user) => user[0] !== myId && user[0] !== myData.id)
+                data.filter((user) => user[0] !== myId && user[0] !== myData.id) //내가 아닌 다른 유저들의 정보만 유저 상태에 저장
             )
         );
         alert("입장");
@@ -68,6 +78,12 @@ export const setLocation = () => {
         top: myData.top,
         left: myData.left,
     });
+};
+
+export const ready = () => {
+    const myData = store.getState().me;
+    console.log(myData);
+    socket.emit("ready", myData.id, myData.isReady);
 };
 
 // 소켓 연결을 끊음

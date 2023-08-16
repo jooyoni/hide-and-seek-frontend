@@ -1,26 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  id: '',
-  nickname: '',
-  top: 0,
-  left: 0,
+    id: "",
+    nickname: "",
+    top: 0,
+    left: 0,
+    team: "",
+    isAdmin: false,
+    isReady: false,
 };
 const me = createSlice({
-  initialState,
-  name: 'me',
-  reducers: {
-    update: (state, action) => {
-      state.id = action.payload.id;
-      state.nickname = action.payload.nickname;
-      return state;
+    initialState,
+    name: "me",
+    reducers: {
+        update: (state, action) => {
+            state.id = action.payload.id;
+            state.nickname = action.payload.nickname;
+            if (action.payload.data) {
+                state.team = action.payload.data.team;
+                state.isAdmin = action.payload.data.isAdmin;
+                state.isReady = action.payload.data.isReady;
+            }
+            return state;
+        },
+        location: (state, action) => {
+            state.top = action.payload.top;
+            state.left = action.payload.left;
+            return state;
+        },
+        ready: (state, action) => {
+            state.isReady = action.payload;
+        },
     },
-    location: (state, action) => {
-      state.top = action.payload.top;
-      state.left = action.payload.left;
-      return state;
-    },
-  },
 });
 
 export const meActions = me.actions;
