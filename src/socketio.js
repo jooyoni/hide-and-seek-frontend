@@ -30,6 +30,9 @@ export const initSocketConnection = () => {
         if (id == store.getState().me.id) return;
         store.dispatch(usersActions.ready({ id, isReady }));
     });
+    socket.on("gameStart", () => {
+        alert("game start!");
+    });
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결

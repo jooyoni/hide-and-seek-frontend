@@ -11,8 +11,26 @@ function Map01() {
     const myData = useAppSelector((state) => state.me);
     const [chatOpen, setChatOpen] = useState(false);
     function handleReady() {
-        dispatch(meActions.ready(!myData.isReady));
-        ready();
+        if (myData.isAdmin) {
+            //내가 방장일경우
+            let room: { red: number; blue: number; allReady: boolean[] } = {
+                red: 0,
+                blue: 0,
+                allReady: [],
+            };
+            Object.entries(users.val).map((user) => {
+                room[user[1].team]++;
+                if (user[1].isReady) room.allReady.push(true);
+            });
+            room[myData.team!]++;
+            if (room.red !== room.blue) alert("양팀 수가 맞지 않습니다.");
+            else if (room.allReady.includes(false))
+                alert("준비하지 않은 유저가 있습니다.");
+            else ready();
+        } else {
+            dispatch(meActions.ready(!myData.isReady));
+            ready();
+        }
     }
     return (
         <main
@@ -55,7 +73,11 @@ function Map01() {
                 채팅
             </div>
             <div className={styles.readyBtn} onClick={handleReady}>
-                {myData.isReady ? "준비 완료" : "게임 준비"}
+                {myData.isAdmin
+                    ? "게임 시작"
+                    : myData.isReady
+                    ? "준비 완료"
+                    : "게임 준비"}
             </div>
         </main>
     );

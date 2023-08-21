@@ -4,7 +4,7 @@ interface IUserType {
         nickname: string;
         top: number;
         left: number;
-        team: string;
+        team: "red" | "blue";
         isAdmin: boolean;
         isReady: boolean;
     };

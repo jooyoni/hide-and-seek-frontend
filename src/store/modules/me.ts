@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: {
+    id: string;
+    nickname: string;
+    top: number;
+    left: number;
+    team: "red" | "blue" | undefined;
+    isAdmin: boolean;
+    isReady: boolean;
+} = {
     id: "",
     nickname: "",
     top: 0,
     left: 0,
-    team: "",
+    team: undefined,
     isAdmin: false,
     isReady: false,
 };
