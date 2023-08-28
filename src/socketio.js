@@ -4,6 +4,7 @@ import { meActions } from "./store/modules/me";
 import GetMyData from "./hoc/GetMyData";
 import { usersActions } from "./store/modules/users";
 import { store } from "./store/store";
+import { gameInfoActions } from "./store/modules/gameInfo";
 
 export let socket;
 //소켓 연결
@@ -30,8 +31,21 @@ export const initSocketConnection = () => {
         if (id == store.getState().me.id) return;
         store.dispatch(usersActions.ready({ id, isReady }));
     });
-    socket.on("gameStart", () => {
-        alert("game start!");
+    socket.on("gameStart", (data) => {
+        const myData = store.getState().me;
+        let myNewData;
+        let userData = data.filter((user) => {
+            if (user[0] == myData.id) myNewData = user;
+            return user[0] != myData.id;
+        });
+        store.dispatch(
+            meActions.location({
+                top: myNewData[1].top,
+                left: myNewData[1].left,
+            })
+        );
+        store.dispatch(usersActions.join(userData));
+        store.dispatch(gameInfoActions.gameStart());
     });
 };
 

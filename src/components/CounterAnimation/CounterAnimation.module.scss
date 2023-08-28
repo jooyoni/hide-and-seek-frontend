@@ -1,0 +1,22 @@
+@keyframes bigger {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 11;
+    font-size: 100px;
+    font-weight: bold;
+    transform-origin: center;
+    text-align: center;
+    &.animation {
+        animation: bigger 0.3s ease forwards;
+    }
+}

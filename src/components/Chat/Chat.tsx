@@ -15,7 +15,6 @@ function Chat({ chatOpen, setChatOpen }: IPropsType) {
     const [chat, setChat] = useState("");
     const [chatList, setChatList] = useState<IChatType[]>([]);
     const users = useAppSelector((state) => state.users);
-
     useEffect(() => {
         getChat(setChatList);
     }, []);

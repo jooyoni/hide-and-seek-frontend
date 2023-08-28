@@ -5,7 +5,7 @@ import {
     setNickname,
 } from "../../socketio";
 import { useLocation, useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./Me.module.scss";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { meActions } from "../../store/modules/me";
@@ -13,8 +13,10 @@ interface IUserType {
     id: string;
     nickname: string;
 }
+
 function Me() {
     const myData = useAppSelector((state) => state.me);
+    const gameInfo = useAppSelector((state) => state.gameInfo);
     const myDataRef = useRef({ ...myData });
     const [top, setTop] = useState(false);
     const [bottom, setBottom] = useState(false);
@@ -38,7 +40,8 @@ function Me() {
         setNickname(myData.id, nicknameInput);
     }
 
-    function handleClientKeyDown(e: KeyboardEvent) {
+    const handleClientKeyDown = useCallback((e: KeyboardEvent) => {
+        console.log("keydown");
         if (e.keyCode == 37) {
             setLeft(true);
         } else if (e.keyCode == 38) setTop(true);
@@ -46,15 +49,15 @@ function Me() {
             setRight(true);
         } else if (e.keyCode == 40) setBottom(true);
         setIsMoving(true);
-    }
-    function handleClientKeyUp(e: KeyboardEvent) {
+    }, []);
+    const handleClientKeyUp = useCallback((e: KeyboardEvent) => {
         if (e.keyCode == 37) {
             setLeft(false);
         } else if (e.keyCode == 38) setTop(false);
         else if (e.keyCode == 39) {
             setRight(false);
         } else if (e.keyCode == 40) setBottom(false);
-    }
+    }, []);
     useEffect(() => {
         if (!top && !left && !bottom && !right) {
             setIsMoving(false);
@@ -95,15 +98,24 @@ function Me() {
     }, [isMoving, intervalHelper]);
 
     useEffect(() => {
-        document.addEventListener("keydown", (e) => handleClientKeyDown(e));
-        document.addEventListener("keyup", (e) => handleClientKeyUp(e));
+        if (gameInfo.isMovable) {
+            document.addEventListener("keydown", handleClientKeyDown);
+            document.addEventListener("keyup", handleClientKeyUp);
+        } else {
+            document.removeEventListener("keydown", handleClientKeyDown);
+            document.removeEventListener("keyup", handleClientKeyUp);
+        }
+
         return () => {
             document.removeEventListener("keydown", (e) =>
                 handleClientKeyDown(e)
             );
-            document.addEventListener("keyup", (e) => handleClientKeyUp(e));
+            document.removeEventListener("keyup", (e) => handleClientKeyUp(e));
         };
-    }, []);
+    }, [gameInfo.isMovable]);
+    useEffect(() => {
+        myDataRef.current = { ...myData };
+    }, [myData.top, myData.left]);
     return (
         <>
             <article
@@ -111,13 +123,15 @@ function Me() {
                 style={{ backgroundColor: myData.team }}
             >
                 <span className={styles.nickname}>
-                    (
-                    {myData.isAdmin
-                        ? "방장"
-                        : myData.isReady
-                        ? "준비완료"
-                        : "준비안함"}
-                    ){myData.nickname}
+                    {!gameInfo.isGaming &&
+                        `(${
+                            myData.isAdmin
+                                ? "방장"
+                                : myData.isReady
+                                ? "준비완료"
+                                : "준비안함"
+                        })`}
+                    {myData.nickname}
                 </span>
             </article>
             {!myData.nickname && (
