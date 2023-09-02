@@ -40,6 +40,10 @@ function Map01() {
         if (!gameInfo.isGaming) return;
         setCounterAnimationOpen(true);
     }, [gameInfo.isGaming]);
+    console.log(myData.left);
+    console.log(
+        Object.keys(users.val)[0] && users.val[Object.keys(users.val)[0]].left
+    );
     return (
         <main className={styles.container}>
             <Me />
@@ -77,8 +81,19 @@ function Map01() {
                 })}
             </div>
             <Chat chatOpen={chatOpen} setChatOpen={setChatOpen} />
+            <div className={styles.userInfoBox}>
+                <div
+                    className={styles.healthBar}
+                    style={{ width: `${myData.health}%` }}
+                >
+                    {myData.health}%
+                </div>
+            </div>
             <div className={styles.chatBtn} onClick={() => setChatOpen(true)}>
                 채팅
+            </div>
+            <div className={styles.attackBtn}>
+                <span>SPACEBAR</span>
             </div>
             {!gameInfo.isGaming && (
                 <div className={styles.readyBtn} onClick={handleReady}>

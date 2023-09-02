@@ -24,7 +24,22 @@
         color: white;
     }
 }
-
+.userInfoBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    .healthBar {
+        background-color: red;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+    }
+}
 .chatBtn {
     position: absolute;
     bottom: 0;
@@ -36,6 +51,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.attackBtn {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    background-image: url("https://media.istockphoto.com/id/1242089262/vector/hand-fist-punching-or-hitting-comic-pop-art.jpg?s=612x612&w=0&k=20&c=W6kfsaRHikFdmy2T9xVoybBBuo6LNVs9IsBMw830gLU=");
+    background-size: 70px 70px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    border: 3px solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    span {
+        transform: translateY(50%);
+        background-color: white;
+    }
 }
 .readyBtn {
     position: absolute;

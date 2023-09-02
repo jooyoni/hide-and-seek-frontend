@@ -47,6 +47,9 @@ export const initSocketConnection = () => {
         store.dispatch(usersActions.join(userData));
         store.dispatch(gameInfoActions.gameStart());
     });
+    socket.on("hit", (id, data) => {
+        console.log(id, data);
+    });
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
@@ -95,6 +98,11 @@ export const setLocation = () => {
         top: myData.top,
         left: myData.left,
     });
+};
+
+export const attack = () => {
+    const myData = store.getState().me;
+    socket.emit("attack", myData.id);
 };
 
 export const ready = () => {

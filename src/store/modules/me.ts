@@ -8,6 +8,7 @@ const initialState: {
     team: "red" | "blue" | undefined;
     isAdmin: boolean;
     isReady: boolean;
+    health: number;
 } = {
     id: "",
     nickname: "",
@@ -16,6 +17,7 @@ const initialState: {
     team: undefined,
     isAdmin: false,
     isReady: false,
+    health: 100,
 };
 const me = createSlice({
     initialState,

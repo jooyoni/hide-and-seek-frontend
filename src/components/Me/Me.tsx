@@ -1,4 +1,5 @@
 import {
+    attack,
     initSocketConnection,
     joinRoom,
     setLocation,
@@ -41,8 +42,8 @@ function Me() {
     }
 
     const handleClientKeyDown = useCallback((e: KeyboardEvent) => {
-        console.log("keydown");
-        if (e.keyCode == 37) {
+        if (e.keyCode == 32) attack();
+        else if (e.keyCode == 37) {
             setLeft(true);
         } else if (e.keyCode == 38) setTop(true);
         else if (e.keyCode == 39) {
