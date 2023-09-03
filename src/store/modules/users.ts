@@ -7,6 +7,9 @@ interface IUserType {
         team: "red" | "blue";
         isAdmin: boolean;
         isReady: boolean;
+        health: number;
+        attacked: boolean;
+        getHitted: boolean;
     };
 }
 const initialState: { val: IUserType } = {
@@ -26,6 +29,9 @@ const users = createSlice({
                     team: user[1].team,
                     isAdmin: user[1].isAdmin,
                     isReady: user[1].isReady,
+                    health: user[1].isReady.helath,
+                    attacked: user[1].attacked,
+                    getHitted: user[1].getHitted,
                 };
             });
             state.val = { ...newState };

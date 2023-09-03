@@ -9,6 +9,8 @@ const initialState: {
     isAdmin: boolean;
     isReady: boolean;
     health: number;
+    attacked: boolean;
+    getHitted: boolean;
 } = {
     id: "",
     nickname: "",
@@ -18,6 +20,8 @@ const initialState: {
     isAdmin: false,
     isReady: false,
     health: 100,
+    attacked: false,
+    getHitted: false,
 };
 const me = createSlice({
     initialState,

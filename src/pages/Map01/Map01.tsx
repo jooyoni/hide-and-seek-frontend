@@ -40,10 +40,6 @@ function Map01() {
         if (!gameInfo.isGaming) return;
         setCounterAnimationOpen(true);
     }, [gameInfo.isGaming]);
-    console.log(myData.left);
-    console.log(
-        Object.keys(users.val)[0] && users.val[Object.keys(users.val)[0]].left
-    );
     return (
         <main className={styles.container}>
             <Me />
