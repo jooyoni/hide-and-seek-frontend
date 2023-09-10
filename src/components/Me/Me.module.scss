@@ -1,3 +1,11 @@
+@keyframes getHit {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
 .nicknameForm {
     position: absolute;
     top: 50%;
@@ -17,6 +25,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+    transition: border-radius 0.1s ease-in;
     &::after {
         content: "";
         display: block;
@@ -28,6 +37,16 @@
         border-radius: 50%;
         border: 2px solid red;
         transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+    &.attack {
+        border-radius: 50%;
+    }
+    &.getHit {
+        animation-duration: 0.2s;
+        animation-name: getHit;
+        animation-delay: 0.2s;
+        animation-iteration-count: infinite;
     }
 }
 .nickname {

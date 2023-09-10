@@ -10,7 +10,7 @@ const initialState: {
     isReady: boolean;
     health: number;
     attacked: boolean;
-    getHitted: boolean;
+    getHitted: number;
 } = {
     id: "",
     nickname: "",
@@ -21,7 +21,7 @@ const initialState: {
     isReady: false,
     health: 100,
     attacked: false,
-    getHitted: false,
+    getHitted: 0,
 };
 const me = createSlice({
     initialState,
@@ -44,6 +44,13 @@ const me = createSlice({
         },
         ready: (state, action) => {
             state.isReady = action.payload;
+        },
+        attack: (state, action) => {
+            state.attacked = action.payload;
+        },
+        getHit: (state) => {
+            state.health = state.health - 20;
+            state.getHitted += 1;
         },
     },
 });

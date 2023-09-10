@@ -7,6 +7,7 @@ import { meActions } from "../../store/modules/me";
 import { ready, socket } from "../../socketio";
 import { usersActions } from "../../store/modules/users";
 import CounterAnimation from "../../components/CounterAnimation/CounterAnimation";
+import User from "../../components/User/User";
 function Map01() {
     const dispatch = useAppDispatch();
     const users = useAppSelector((state) => state.users);
@@ -40,6 +41,7 @@ function Map01() {
         if (!gameInfo.isGaming) return;
         setCounterAnimationOpen(true);
     }, [gameInfo.isGaming]);
+    console.log(users);
     return (
         <main className={styles.container}>
             <Me />
@@ -51,29 +53,7 @@ function Map01() {
                 }}
             >
                 {Object.entries(users.val).map((user, idx) => {
-                    return (
-                        <div
-                            className={styles.user}
-                            style={{
-                                top: user[1].top + 225,
-                                left: user[1].left + 425,
-                                backgroundColor: user[1].team,
-                            }}
-                        >
-                            <span className={styles.nickname}>
-                                {!gameInfo.isGaming &&
-                                    `(${
-                                        user[1].isAdmin
-                                            ? "방장"
-                                            : user[1].isReady
-                                            ? "준비완료"
-                                            : "준비안함"
-                                    })`}
-
-                                {user[1].nickname ? user[1].nickname : idx}
-                            </span>
-                        </div>
-                    );
+                    return <User user={user} />;
                 })}
             </div>
             <Chat chatOpen={chatOpen} setChatOpen={setChatOpen} />

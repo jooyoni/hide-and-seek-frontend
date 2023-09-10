@@ -26,6 +26,10 @@ function Me() {
     const [isMoving, setIsMoving] = useState(false);
     const [intervalHelper, setIntervalHelper] = useState(0);
 
+    const [attackMotion, setAttackMotion] = useState(false);
+    const [getHitMotion, setGetHitMotion] = useState(false);
+    const getHitTimer = useRef<ReturnType<typeof setTimeout>>();
+
     const dispatch = useAppDispatch();
     const location = useLocation();
     const [nicknameInput, setNicknameInput] = useState("");
@@ -117,10 +121,30 @@ function Me() {
     useEffect(() => {
         myDataRef.current = { ...myData };
     }, [myData.top, myData.left]);
+    useEffect(() => {
+        if (!myData.attacked) return;
+        setAttackMotion(true);
+        setTimeout(() => {
+            setAttackMotion(false);
+        }, 300);
+        setTimeout(() => {
+            dispatch(meActions.attack(false));
+        }, 3000);
+    }, [myData.attacked]);
+    useEffect(() => {
+        if (!myData.getHitted) return;
+        setGetHitMotion(true);
+        if (getHitTimer.current) clearTimeout(getHitTimer.current);
+        getHitTimer.current = setTimeout(() => {
+            setGetHitMotion(false);
+        }, 3000);
+    }, [myData.getHitted]);
     return (
         <>
             <article
-                className={styles.character}
+                className={`${styles.character} ${
+                    attackMotion ? styles.attack : ""
+                } ${getHitMotion ? styles.getHit : ""}`}
                 style={{ backgroundColor: myData.team }}
             >
                 <span className={styles.nickname}>

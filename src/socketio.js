@@ -48,7 +48,13 @@ export const initSocketConnection = () => {
         store.dispatch(gameInfoActions.gameStart());
     });
     socket.on("hit", (id, data) => {
-        console.log(id, data);
+        const myData = store.getState().me;
+        let getHitUsers = data;
+        if (getHitUsers.includes(myData.id)) {
+            store.dispatch(meActions.getHit());
+            getHitUsers = getHitUsers.filter((id) => id !== myData.id);
+        }
+        store.dispatch(usersActions.getHit({ getHitUsers }));
     });
 };
 
@@ -102,6 +108,8 @@ export const setLocation = () => {
 
 export const attack = () => {
     const myData = store.getState().me;
+    // if (myData.attacked) return;
+    store.dispatch(meActions.attack(true));
     socket.emit("attack", myData.id);
 };
 

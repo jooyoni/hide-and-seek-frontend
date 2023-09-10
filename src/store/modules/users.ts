@@ -9,7 +9,7 @@ interface IUserType {
         isReady: boolean;
         health: number;
         attacked: boolean;
-        getHitted: boolean;
+        getHitted: number;
     };
 }
 const initialState: { val: IUserType } = {
@@ -29,7 +29,7 @@ const users = createSlice({
                     team: user[1].team,
                     isAdmin: user[1].isAdmin,
                     isReady: user[1].isReady,
-                    health: user[1].isReady.helath,
+                    health: user[1].health,
                     attacked: user[1].attacked,
                     getHitted: user[1].getHitted,
                 };
@@ -53,6 +53,15 @@ const users = createSlice({
             let user = { ...current(state).val[action.payload.id] };
             user.isReady = action.payload.isReady;
             state.val[action.payload.id] = user;
+        },
+        getHit: (state, action) => {
+            console.log(action.payload);
+            let users = state.val;
+            action.payload.getHitUsers.map((id: string) => {
+                users[id].getHitted += 1;
+                users[id].health -= 20;
+            });
+            state.val = { ...users };
         },
     },
 });
