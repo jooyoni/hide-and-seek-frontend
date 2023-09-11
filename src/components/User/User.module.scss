@@ -1,7 +1,16 @@
+@keyframes getHit {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
 .user {
     width: 50px;
     height: 50px;
     position: absolute;
+    transition: border-radius 0.1s ease-in;
     .health {
         position: absolute;
         left: 0;
@@ -20,5 +29,14 @@
         transform: translate(-50%, -100%);
         white-space: nowrap;
         color: white;
+    }
+    &.attack {
+        border-radius: 50%;
+    }
+    &.getHit {
+        animation-duration: 0.2s;
+        animation-name: getHit;
+        animation-delay: 0.2s;
+        animation-iteration-count: infinite;
     }
 }

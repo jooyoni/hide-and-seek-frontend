@@ -54,9 +54,14 @@ const users = createSlice({
             user.isReady = action.payload.isReady;
             state.val[action.payload.id] = user;
         },
-        getHit: (state, action) => {
-            console.log(action.payload);
+        attack: (state, action) => {
             let users = state.val;
+            users[action.payload.id].attacked = action.payload.attack;
+        },
+        getHit: (state, action) => {
+            let users = state.val;
+            if (users[action.payload.id])
+                users[action.payload.id].attacked = true;
             action.payload.getHitUsers.map((id: string) => {
                 users[id].getHitted += 1;
                 users[id].health -= 20;

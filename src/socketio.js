@@ -49,12 +49,13 @@ export const initSocketConnection = () => {
     });
     socket.on("hit", (id, data) => {
         const myData = store.getState().me;
+        if (id == myData.id) store.dispatch(meActions.attack(true));
         let getHitUsers = data;
         if (getHitUsers.includes(myData.id)) {
             store.dispatch(meActions.getHit());
             getHitUsers = getHitUsers.filter((id) => id !== myData.id);
         }
-        store.dispatch(usersActions.getHit({ getHitUsers }));
+        store.dispatch(usersActions.getHit({ id, getHitUsers }));
     });
 };
 
@@ -108,8 +109,7 @@ export const setLocation = () => {
 
 export const attack = () => {
     const myData = store.getState().me;
-    // if (myData.attacked) return;
-    store.dispatch(meActions.attack(true));
+    if (myData.attacked) return;
     socket.emit("attack", myData.id);
 };
 

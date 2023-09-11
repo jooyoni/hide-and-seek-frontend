@@ -48,6 +48,9 @@
         animation-delay: 0.2s;
         animation-iteration-count: infinite;
     }
+    &.death {
+        opacity: 0.3;
+    }
 }
 .nickname {
     position: absolute;

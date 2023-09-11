@@ -122,7 +122,7 @@ function Me() {
         myDataRef.current = { ...myData };
     }, [myData.top, myData.left]);
     useEffect(() => {
-        if (!myData.attacked) return;
+        if (!myData.attacked || myData.health <= 0) return;
         setAttackMotion(true);
         setTimeout(() => {
             setAttackMotion(false);
@@ -137,14 +137,16 @@ function Me() {
         if (getHitTimer.current) clearTimeout(getHitTimer.current);
         getHitTimer.current = setTimeout(() => {
             setGetHitMotion(false);
-        }, 3000);
+        }, 1000);
     }, [myData.getHitted]);
     return (
         <>
             <article
                 className={`${styles.character} ${
                     attackMotion ? styles.attack : ""
-                } ${getHitMotion ? styles.getHit : ""}`}
+                } ${getHitMotion ? styles.getHit : ""}
+                ${myData.health <= 0 ? styles.death : ""}
+                `}
                 style={{ backgroundColor: myData.team }}
             >
                 <span className={styles.nickname}>
