@@ -96,3 +96,23 @@
     justify-content: center;
     align-items: center;
 }
+
+@keyframes scaleAnimation {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+.winner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    z-index: 10;
+    transform-origin: center;
+    animation: scaleAnimation 0.3s ease-in forwards;
+}
