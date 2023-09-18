@@ -78,6 +78,11 @@ const users = createSlice({
         goOut: (state, action) => {
             delete state.val[action.payload];
         },
+        setAdmin: (state, action) => {
+            let users = state.val;
+            users[action.payload].isAdmin = true;
+            users[action.payload].isReady = false;
+        },
     },
 });
 

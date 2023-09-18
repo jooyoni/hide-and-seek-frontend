@@ -66,6 +66,13 @@ export const initSocketConnection = () => {
     socket.on("goOut", (userId) => {
         store.dispatch(usersActions.goOut(userId));
     });
+    socket.on("adminChange", (adminId) => {
+        console.log(`adminChange ${adminId}`);
+        const myData = store.getState().me;
+        console.log(myData.id, adminId);
+        if (myData.id == adminId) store.dispatch(meActions.setAdmin());
+        else store.dispatch(usersActions.setAdmin(adminId));
+    });
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
