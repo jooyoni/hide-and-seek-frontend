@@ -9,6 +9,7 @@ import { usersActions } from "../../store/modules/users";
 import CounterAnimation from "../../components/CounterAnimation/CounterAnimation";
 import User from "../../components/User/User";
 import { gameInfoActions } from "../../store/modules/gameInfo";
+import AttackBtn from "../../components/AttackBtn/AttackBtn";
 function Map01() {
     const dispatch = useAppDispatch();
     const users = useAppSelector((state) => state.users);
@@ -48,6 +49,7 @@ function Map01() {
             dispatch(gameInfoActions.resetWinTeam());
         }, 3000);
     }, [gameInfo.winTeam]);
+
     return (
         <main className={styles.container}>
             <Me />
@@ -74,9 +76,7 @@ function Map01() {
             <div className={styles.chatBtn} onClick={() => setChatOpen(true)}>
                 채팅
             </div>
-            <div className={styles.attackBtn}>
-                <span>SPACEBAR</span>
-            </div>
+            <AttackBtn />
             {!gameInfo.isGaming && (
                 <div className={styles.readyBtn} onClick={handleReady}>
                     {myData.isAdmin
