@@ -10,14 +10,17 @@ import CounterAnimation from "../../components/CounterAnimation/CounterAnimation
 import User from "../../components/User/User";
 import { gameInfoActions } from "../../store/modules/gameInfo";
 import AttackBtn from "../../components/AttackBtn/AttackBtn";
+import { useParams } from "react-router-dom";
 function Map01() {
     const dispatch = useAppDispatch();
     const users = useAppSelector((state) => state.users);
     const myData = useAppSelector((state) => state.me);
     const gameInfo = useAppSelector((state) => state.gameInfo);
     const [chatOpen, setChatOpen] = useState(false);
+    const params = useParams();
     function handleReady() {
         if (myData.isAdmin) {
+            console.log("test1");
             //내가 방장일경우
             let room: { red: number; blue: number; allReady: boolean[] } = {
                 red: 0,
@@ -49,7 +52,9 @@ function Map01() {
             dispatch(gameInfoActions.resetWinTeam());
         }, 3000);
     }, [gameInfo.winTeam]);
-
+    function copyRoomNumber() {
+        navigator.clipboard.writeText(params.roomNumber || "");
+    }
     return (
         <main className={styles.container}>
             <Me />
@@ -68,15 +73,29 @@ function Map01() {
             <div className={styles.userInfoBox}>
                 <div
                     className={styles.healthBar}
-                    style={{ width: `${myData.health}%` }}
+                    style={{
+                        width: `${myData.health}%`,
+                        backgroundColor: `${
+                            myData.team == "red"
+                                ? "rgba(255,0,0,0.8)"
+                                : "rgba(0,0,255,0.8)"
+                        }`,
+                    }}
                 >
                     {myData.health}%
                 </div>
             </div>
-            <div className={styles.chatBtn} onClick={() => setChatOpen(true)}>
-                채팅
-            </div>
+            <div
+                className={styles.chatBtn}
+                onClick={() => setChatOpen(true)}
+            ></div>
             <AttackBtn />
+            {!gameInfo.isGaming && (
+                <article className={styles.roomNumberWrap}>
+                    <span>방번호 : {params.roomNumber}</span>
+                    <button onClick={copyRoomNumber}>복사</button>
+                </article>
+            )}
             {!gameInfo.isGaming && (
                 <div className={styles.readyBtn} onClick={handleReady}>
                     {myData.isAdmin

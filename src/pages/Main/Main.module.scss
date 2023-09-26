@@ -1,0 +1,56 @@
+.container {
+    width: 900px;
+    height: 500px;
+    margin: 0 auto;
+    background-image: url("../../assets/main_banner.jpg");
+    background-size: cover;
+    background-position: center bottom;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contentWrap {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 40px 20px;
+    border-radius: 20px;
+    form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        input {
+            width: 200px;
+            height: 50px;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid var(--theme-font-color);
+            font-size: 40px;
+            color: var(--theme-font-color);
+            text-align: center;
+        }
+        button {
+            background-color: rgba(0, 0, 0, 0.1);
+            width: 100px;
+            height: 50px;
+            font-size: 24px;
+            color: var(--theme-font-color);
+            border: 2px solid var(--theme-font-color);
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    }
+    .createRoom {
+        margin-top: 20px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.1);
+        font-size: 24px;
+        color: var(--theme-font-color);
+        border: 2px solid var(--theme-font-color);
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}

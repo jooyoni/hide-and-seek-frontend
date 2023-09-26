@@ -7,14 +7,22 @@
     background-color: rgba(0, 0, 0, 0.7);
     overflow: scroll;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
     &::-webkit-scrollbar {
         display: none;
     }
+}
+.chatList {
+    flex-grow: 1;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 .chat {
     display: flex;
     flex-direction: column;
     color: white;
+    padding: 5px 10px;
     &.myChat {
         text-align: right;
     }
@@ -22,15 +30,50 @@
         font-size: 24px;
     }
 }
+
+.chatForm {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    flex-shrink: 0;
+    input {
+        border-radius: 100px;
+        flex-grow: 1;
+        height: 50px;
+        background-color: rgb(88, 69, 69);
+        border: none;
+        outline: none;
+        color: rgb(230, 218, 218);
+        font-size: 26px;
+        font-weight: bold;
+        padding-left: 30px;
+    }
+    button {
+        height: 50px;
+        width: 80px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        font-size: 20px;
+        color: var(--theme-font-color);
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
 .closeBtn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
     width: 50px;
     height: 50px;
-    background-color: blue;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+    flex-shrink: 0;
+    background-image: url("../../assets/close.png");
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
 }

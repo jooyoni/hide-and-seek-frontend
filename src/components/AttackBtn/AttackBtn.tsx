@@ -23,7 +23,7 @@ function AttackBtn() {
     }, [attackTimestamp, attackCooltime]);
     return (
         <article className={styles.attackBtn}>
-            <span>SPACEBAR</span>
+            <span>SPACE</span>
             <div
                 className={`${styles.coolTimeShadow} ${
                     myData.attacked ? styles.coolTime : ""

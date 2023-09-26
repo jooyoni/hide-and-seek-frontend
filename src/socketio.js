@@ -76,7 +76,7 @@ export const initSocketConnection = () => {
 };
 
 //채널 입장, 개설 및 해당 채널로 재연결
-export const joinRoom = (roomNumber, dispatch) => {
+export const joinRoom = (roomNumber) => {
     socket.emit("joinRoom", roomNumber);
     socket.on("joinSuccess", (id, data) => {
         //id는 joinSuccess를 발생시킨 유저의 id, data는 전체 유저의 데이터
@@ -84,7 +84,7 @@ export const joinRoom = (roomNumber, dispatch) => {
         let myId = "";
         if (!myData.id) {
             //사용자 첫 입장시
-            dispatch(
+            store.dispatch(
                 meActions.update({
                     id,
                     nickname: "",
@@ -93,7 +93,7 @@ export const joinRoom = (roomNumber, dispatch) => {
             );
             myId = id;
         }
-        dispatch(
+        store.dispatch(
             usersActions.join(
                 data.filter((user) => user[0] !== myId && user[0] !== myData.id) //내가 아닌 다른 유저들의 정보만 유저 상태에 저장
             )

@@ -32,31 +32,20 @@ function Chat({ chatOpen, setChatOpen }: IPropsType) {
     function getNickname(chat: IChatType) {
         if (chat.id == myData.id) return myData.nickname;
         else {
-            return users.val[chat.id].nickname;
-            // let nickname = '';
-            // for (let i = 0; i < users.val.length; i++) {
-            //   if (users.val[i].id == chat.id) {
-            //     nickname = users.val[i].nickname;
-            //     break;
-            //   }
-            // }
-            // return nickname;
+            if (users.val[chat.id]) return users.val[chat.id].nickname;
+            else return "나간 유저";
         }
     }
     return (
-        <article
+        <section
             className={styles.container}
-            style={{ display: chatOpen ? "block" : "none" }}
+            style={{ display: chatOpen ? "flex" : "none" }}
         >
-            <form onSubmit={(e) => chatSubmit(e)}>
-                <input
-                    type="text"
-                    value={chat}
-                    onChange={(e) => setChat(e.currentTarget.value)}
-                />
-                <button>전송</button>
-            </form>
-            <ul>
+            <div
+                className={styles.closeBtn}
+                onClick={() => setChatOpen(false)}
+            ></div>
+            <ul className={styles.chatList}>
                 {chatList.map((chat, idx) => (
                     <li
                         className={`${styles.chat} ${
@@ -69,10 +58,15 @@ function Chat({ chatOpen, setChatOpen }: IPropsType) {
                     </li>
                 ))}
             </ul>
-            <div className={styles.closeBtn} onClick={() => setChatOpen(false)}>
-                닫기
-            </div>
-        </article>
+            <form className={styles.chatForm} onSubmit={(e) => chatSubmit(e)}>
+                <input
+                    type="text"
+                    value={chat}
+                    onChange={(e) => setChat(e.currentTarget.value)}
+                />
+                <button>전송</button>
+            </form>
+        </section>
     );
 }
 export default Chat;

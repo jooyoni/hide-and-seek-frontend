@@ -1,5 +1,6 @@
 import {
     attack,
+    disconnectSocket,
     initSocketConnection,
     joinRoom,
     setLocation,
@@ -36,9 +37,10 @@ function Me() {
     const [isConnected, setIsConnected] = useState(false);
     const { roomNumber } = useParams();
     useEffect(() => {
+        disconnectSocket();
         initSocketConnection();
-        joinRoom(roomNumber, dispatch);
-    }, []);
+        joinRoom(roomNumber);
+    }, [roomNumber]);
     function nicknameSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         dispatch(meActions.update({ ...myData, nickname: nicknameInput }));
@@ -139,6 +141,7 @@ function Me() {
             setGetHitMotion(false);
         }, 1000);
     }, [myData.getHitted]);
+    console.log(myData);
     return (
         <>
             <article
@@ -166,10 +169,10 @@ function Me() {
                     onSubmit={(e) => nicknameSubmit(e)}
                     className={styles.nicknameForm}
                 >
-                    <h3>닉네임을 입력해주세요.</h3>
                     <input
                         type="text"
                         value={nicknameInput}
+                        placeholder="닉네임을 입력해주세요."
                         onChange={(e) =>
                             setNicknameInput(e.currentTarget.value)
                         }
